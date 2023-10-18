@@ -1,0 +1,50 @@
+---
+- name: Ensure {{ ssl_group }} group exists
+  group:
+    name: "{{ ssl_group }}"
+    state: present
+
+- name: Add users to {{ ssl_group }} group
+  user:
+    name: "{{ item }}"
+    groups: "{{ ssl_group }}"
+    append: yes
+  with_items: "{{ ssl_users }}"
+
+- name: Create DB SSL directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0660'
+    owner: root
+    group: "{{ ssl_group }}"
+  with_items:
+    - "{{ ssl_certs_dir }}"
+    - "{{ ssl_private_key_dir }}"
+
+- name: Copy certificate .pem
+  copy:
+    remote_src: true
+    src: "{{ ssl_source_crt }}"
+    dest: "{{ ssl_cert_path }}"
+    owner: root
+    group: "{{ ssl_group }}"
+    mode: '0644'
+
+- name: Copy private key
+  copy:
+    remote_src: true
+    src: "{{ ssl_source_key }}"
+    dest: "{{ ssl_key_path }}"
+    owner: root
+    group: "{{ ssl_group }}"
+    mode: '0640'
+
+- name: Copy ca
+  copy:
+    remote_src: true
+    src: "{{ ssl_source_ca }}"
+    dest: "{{ ssl_ca_path }}"
+    owner: root
+    group: "{{ ssl_group }}"
+    mode: '0640'
