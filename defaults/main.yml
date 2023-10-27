@@ -7,7 +7,7 @@ ssl_ca_dir: /opt/ssl
 ssl_users: []
 ssl_group: ssl-cert
 domain_name: ""
-ssl_source_crt: "/etc/letsencrypt/live/{{ domain_name }}/cert.pem"
+ssl_source_crt: "/etc/letsencrypt/live/{{ domain_name }}/fullchain.pem"
 ssl_source_key: "/etc/letsencrypt/live/{{ domain_name }}/privkey.pem"
 ssl_source_ca: "/etc/letsencrypt/live/{{ domain_name }}/chain.pem"
 ssl_cert_path: "{{ ssl_certs_dir }}/{{ domain_name }}.crt"
