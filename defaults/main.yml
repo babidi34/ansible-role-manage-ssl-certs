@@ -13,3 +13,6 @@ ssl_source_ca: "/etc/letsencrypt/live/{{ domain_name }}/chain.pem"
 ssl_cert_path: "{{ ssl_certs_dir }}/{{ domain_name }}.crt"
 ssl_key_path: "{{ ssl_private_key_dir }}/{{ domain_name }}.key"
 ssl_ca_path: "{{ ssl_ca_dir }}/{{ domain_name }}.ca"
+remote_cert_path: "{{ ssl_source_crt }}"
+local_cert_path: "{{ playbook_dir }}/../ssl/{{ domain_name }}.crt"
+stock_ssl: false

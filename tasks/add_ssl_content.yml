@@ -1,0 +1,16 @@
+---
+- name: Add {{ ssl[(domain_name + '_crt')] }} in {{ ssl_cert_path }}
+  copy:
+    src: "{{ ssl[(domain_name + '_crt')] }}"
+    dest: "{{ ssl_cert_path }}"
+    owner: root
+    group: "{{ ssl_group }}"
+    mode: '0644'
+
+- name: Add {{[(domain_name + '_key')]}} dans {{ ssl_key_path }}
+  copy:
+    content: "{{ ssl[(domain_name + '_key')] }}"
+    dest: "{{ ssl_key_path }}"
+    owner: root
+    group: "{{ ssl_group }}"
+    mode: '0640'

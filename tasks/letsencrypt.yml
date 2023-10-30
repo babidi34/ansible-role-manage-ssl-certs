@@ -1,0 +1,35 @@
+---
+- name: Copy certificate .pem
+  copy:
+    remote_src: true
+    src: "{{ ssl_source_crt }}"
+    dest: "{{ ssl_cert_path }}"
+    owner: root
+    group: "{{ ssl_group }}"
+    mode: '0644'
+
+- name: Copy private key
+  copy:
+    remote_src: true
+    src: "{{ ssl_source_key }}"
+    dest: "{{ ssl_key_path }}"
+    owner: root
+    group: "{{ ssl_group }}"
+    mode: '0640'
+
+- name: Copy ca
+  copy:
+    remote_src: true
+    src: "{{ ssl_source_ca }}"
+    dest: "{{ ssl_ca_path }}"
+    owner: root
+    group: "{{ ssl_group }}"
+    mode: '0640'
+
+
+- name: Récupérer le certificat du serveur distant
+  fetch:
+    src: "{{ remote_cert_path }}"
+    dest: "{{ local_cert_path }}"
+    flat: yes
+  when: stock_ssl
