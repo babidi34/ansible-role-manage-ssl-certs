@@ -15,7 +15,7 @@
   file:
     path: "{{ item }}"
     state: directory
-    mode: '0661'
+    mode: '0770'
     owner: root
     group: "{{ ssl_group }}"
   with_items:
