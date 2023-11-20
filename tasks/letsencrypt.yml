@@ -33,3 +33,18 @@
     dest: "{{ local_cert_path }}"
     flat: yes
   when: stock_ssl
+
+- name: Certbot post-hook script after renew
+  copy:
+    dest: "/etc/letsencrypt/renewal-hooks/post/certbot-renew-hook-{{ domain_name }}.sh"
+    owner: root
+    group: root
+    mode: '0700'
+    content: |
+      #!/bin/bash
+      cp {{ ssl_source_crt }} {{ ssl_cert_path }}
+      cp {{ ssl_source_key }} {{ ssl_key_path }}
+      cp {{ ssl_source_ca }} {{ ssl_ca_path }}
+      chown root:{{ ssl_group }} {{ ssl_cert_path }} {{ ssl_key_path }} {{ ssl_ca_path }}
+      chmod 0644 {{ ssl_cert_path }}
+      chmod 0640 {{ ssl_key_path }} {{ ssl_ca_path }}
