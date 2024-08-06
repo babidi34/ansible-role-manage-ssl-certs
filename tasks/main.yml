@@ -24,7 +24,7 @@
 
 - name: Copy letsencrypt key and crt
   include_tasks: letsencrypt.yml
-  when: ssl[(domain_name + '_crt')] is undefined
+  when: letsencrypt
 
 - name: Add ssl key and ssl crt
   include_tasks: add_ssl_content.yml
